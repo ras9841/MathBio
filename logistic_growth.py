@@ -59,6 +59,15 @@ def main():
 	plt.legend(key, loc='center left', title="r values", 
 			fancybox=True, shadow=True, bbox_to_anchor=(0.9,0.5))
 	plt.axis([0, 80, 0, 300])
+	# Labels
+	plt.title("Changing r parameter")
+	plt.xlabel("Time", fontsize=14)
+	plt.ylabel("Population Size", fontsize=14)
+
+	# Increase font size
+	font =  {'size' : 16}
+	mpl.rc = {'font' : font}
 	plt.show()
+	
 
 main()
