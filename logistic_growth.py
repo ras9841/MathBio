@@ -33,22 +33,32 @@ def main():
 	# Constants
 	n0 = 100
 	k = 250
-	r = 2
+	r = [0.5, 1.0, 2.0, 4.0, 8.0]
+	key = ["0.5", "1.0", "2.0", "4.0", "8.0"]
 	h = .1
 	time = np.linspace(0,100, num = 20/h)
 
 	# Set initial population
-	pop = np.append(np.array([]), n0)
-	for i in range(1, len(time)):
-		n0 = pop[i-1]
-		deriv = lambda n0: r*n0*(1-n0/k)
-		pop = np.append(pop, rk4solve(n0, deriv, h))
+	pops = []
+	for rv in range(0,len(r)):
+		rate = r[rv]
+		pop = np.append(np.array([]), n0)
+		y0 = n0
+		for i in range(1, len(time)):
+			y0 = pop[i-1]
+			deriv = lambda nv: rate*nv*(1-nv/k)
+			pop = np.append(pop, rk4solve(y0, deriv, h))
+		pops.append(pop)
 
 	# Plot solution
 	plt.figure()
-	plt.plot(time, pop)
+	plt.hold(True)
+	for pop in pops:
+		plt.plot(time, pop)
 	plt.grid()
-	plt.axis([0, 20, 0, 300])
+	plt.legend(key, loc='center left', title="r values", 
+			fancybox=True, shadow=True, bbox_to_anchor=(0.9,0.5))
+	plt.axis([0, 80, 0, 300])
 	plt.show()
 
 main()
