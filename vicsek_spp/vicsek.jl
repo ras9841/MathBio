@@ -37,10 +37,13 @@ function vicsek(num_particles, num_iter)
     for num = 1:num_particles
         x0 = num
         y0 = num
-        spps = [spps SPP(v0, x0, y0, neighborhood)]
+        push!(spps, SPP(v0, x0, y0, neighborhood))
     end
     
-    
+    for cell = spps
+        xl, yl = cell.x_loc, cell.y_loc
+        println("($xl,$yl)")
+    end
     
 end
 
