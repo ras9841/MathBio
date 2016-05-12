@@ -12,10 +12,11 @@
 #        System of Self-Driven Particles', Physical Review Letters,
 #        1995
 #   Requirements:
-#        PyPlot julia library installed
+#		 julia configured with matplotlib functionality  
 
-# Libraries
-#using PyPlot
+# Python Imports
+using PyCall
+@pyimport matplotlib.pyplot as plt
 
 type SPP 
     velocity::Float64
@@ -40,11 +41,16 @@ function vicsek(num_particles, num_iter)
         push!(spps, SPP(v0, x0, y0, neighborhood))
     end
     
+	xdata = []
+	ydata = []
     for cell = spps
-        xl, yl = cell.x_loc, cell.y_loc
-        println("($xl,$yl)")
-    end
-    
+		push!(xdata, cell.x_loc)
+		push!(ydata, cell.y_loc)
+	end
+
+	plt.scatter(xdata, ydata)
+	plt.show()
 end
 
-vicsek(10,100)
+#Use a perfect square for the 1st argument
+vicsek(16,100)
